@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :items,     only: [:index, :edit, :new, :create, :update]
     resources :analytics, only: [:index]
   end
+  
+  get "/account/edit", to: "users#edit"
 
   namespace :users do
     resources :stores, only: [:index]
