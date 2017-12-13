@@ -16,14 +16,20 @@ Rails.application.routes.draw do
     resources :items,     only: [:index, :edit, :new, :create, :update]
     resources :analytics, only: [:index]
   end
-
-  resources :users, only: [:new, :create, :edit, :update]
+  
   get "/account/edit", to: "users#edit"
 
+  namespace :users do
+    resources :stores, only: [:index]
+  end
+
+  resources :users ,    only: [:new, :create, :edit, :update]
   resources :orders,    only: [:index, :new, :show, :update]
   resources :dashboard, only: [:index]
   resources :items,     only: [:index, :show]
   resource  :cart,      only: [:show, :create, :destroy, :update]
 
   get '/categories/:category', to: 'categories#show', param: :slug, as: "category"
+
+  resources :stores, only: [:new, :create]
 end
