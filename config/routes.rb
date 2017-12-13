@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     resources :analytics, only: [:index]
   end
 
-  resources :users ,    only: [:new, :create, :edit, :update]
+  resources :users, only: [:new, :create, :edit, :update]
+  get "/account/edit", to: "users#edit"
+
   resources :orders,    only: [:index, :new, :show, :update]
   resources :dashboard, only: [:index]
   resources :items,     only: [:index, :show]
