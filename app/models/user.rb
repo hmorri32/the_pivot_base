@@ -3,7 +3,8 @@ class User < ApplicationRecord
   has_many :orders
   has_many :user_role_stores
   has_many :stores, through: :user_role_stores
-  has_many :roles,  through: :user_role_stores
+  has_many :roles, through: :user_role_stores
+  has_one  :api_key
 
   validates :first_name, :last_name, :password, presence: true
   validates :email, presence: true, uniqueness: true
@@ -29,4 +30,9 @@ class User < ApplicationRecord
   def self.user_quantity_of_items_ordered
     group(:email).joins(orders: :order_items).sum(:quantity)
   end
+
+  def developer?
+    roles.pluck(:name).include?("developer")
+  end
+
 end
