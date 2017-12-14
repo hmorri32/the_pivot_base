@@ -38,4 +38,9 @@ class User < ApplicationRecord
   def developer?
     roles.pluck(:name).include?("developer")
   end
+
+  def authorized?(store)
+    platform_admin? || store_admin?(store) || store_manager?(store)
+  end
+
 end
