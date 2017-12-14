@@ -34,7 +34,9 @@ ActiveRecord::Schema.define(version: 20171212230650) do
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
+    t.bigint "store_id"
     t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["store_id"], name: "index_items_on_store_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -96,6 +98,7 @@ ActiveRecord::Schema.define(version: 20171212230650) do
   end
 
   add_foreign_key "items", "categories"
+  add_foreign_key "items", "stores"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "users"
