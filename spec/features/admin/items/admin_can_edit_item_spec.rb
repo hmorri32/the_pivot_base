@@ -62,7 +62,7 @@ RSpec.feature "admin can edit item" do
 
     expect(page).to_not have_content("Edit")
 
-    visit edit_item_path
+    visit edit_item_path(item)
 
     expect(page).to have_content("404")
     expect(page).to_not have_content(title)

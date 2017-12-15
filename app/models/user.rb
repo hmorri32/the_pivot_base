@@ -11,6 +11,14 @@ class User < ApplicationRecord
 
   enum role: ["default", "admin"]
 
+  def store_admin?(store)
+    user_role_stores.exists?(role: 'store_admin', store: store)
+  end
+
+  def store_manager?(store)
+    user_role_stores.exists?(role: 'store_manager', store: store)
+  end
+
   def platform_admin?
     roles.exists?(name: 'platform_admin')
   end
