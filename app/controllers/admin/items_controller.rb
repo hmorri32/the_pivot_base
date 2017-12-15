@@ -1,5 +1,6 @@
 class Admin::ItemsController < ApplicationController
-  before_action :require_admin
+  before_action :find_item, only: [:update, :edit]
+  
   def index
     @items = Item.all
   end
@@ -9,7 +10,6 @@ class Admin::ItemsController < ApplicationController
   end
 
   def create
-    @categories = Category.all
     @item = Item.new(item_params)
     if @item.save
       redirect_to admin_items_path
@@ -19,8 +19,7 @@ class Admin::ItemsController < ApplicationController
   end
 
   def update
-    @categories = Category.all
-    @item = Item.find(params[:id])
+    require_store_admin
     @item.update(item_params)
     if @item.save
       redirect_to admin_items_path
@@ -30,16 +29,23 @@ class Admin::ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    require_store_admin
   end
 
   private
+
+  def find_item
+    @item = Item.find(params[:id])
+  end
 
   def item_params
     params.require(:item).permit(:title, :description, :price, :image, :category_id, :store_id)
   end
 
-  def require_admin
-    render file: "/public/404" unless current_admin?
+  def require_store_admin
+    unless current_user && current_user.authorized?(@item.store)
+      render file: "/public/404"
+    end
   end
+
 end

@@ -5,7 +5,8 @@ RSpec.describe 'an admin can visit admin dashboard' do
   describe 'and see a link for all items' do
     it 'when clicked that link should be the admin item index with admin functionality' do
       create(:item)
-      admin = create(:admin)
+      admin = create(:user)
+      admin.roles.create(name: 'platform_admin')
 
       stub_logged_in_user(admin)
 
@@ -16,7 +17,7 @@ RSpec.describe 'an admin can visit admin dashboard' do
       fill_in "item[description]", with: "two is better"
       fill_in "item[price]", with: "39.99"
       page.attach_file("item[image]", testing_image)
-      click_on "Update"
+      click_on "Submit"
 
       expect(page).to have_content("White Cat Twosie")
       expect(page).to have_content("39.99")

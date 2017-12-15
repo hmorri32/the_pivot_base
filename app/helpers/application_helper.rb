@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def admin_edit_tag(item)
     if current_user && current_user.authorized?(item.store)
-      link_to "Edit", edit_item_path(item), class: "btn btn-primary"
+      link_to "Edit", edit_admin_item_path(item), class: "btn btn-primary"
     end
   end
 

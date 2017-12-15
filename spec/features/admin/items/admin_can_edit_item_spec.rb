@@ -11,7 +11,7 @@ RSpec.feature "admin can edit item" do
     visit items_path
 
     click_on "Edit", match: :first
-    fill_in "title", with: "NUNU"
+    fill_in "item[title]", with: "NUNU"
     click_on "Submit"
 
     expect(page).to_not have_content(title)
@@ -28,7 +28,7 @@ RSpec.feature "admin can edit item" do
     visit admin_items_path
 
     click_on "Edit", match: :first
-    fill_in "title", with: "NUNU"
+    fill_in "item[title]", with: "NUNU"
     click_on "Submit"
 
     expect(page).to_not have_content(title)
@@ -45,7 +45,7 @@ RSpec.feature "admin can edit item" do
     visit item_path(item)
 
     click_on "Edit", match: :first
-    fill_in "title", with: "NUNU"
+    fill_in "item[title]", with: "NUNU"
     click_on "Submit"
 
     expect(page).to_not have_content(title)
@@ -62,7 +62,7 @@ RSpec.feature "admin can edit item" do
 
     expect(page).to_not have_content("Edit")
 
-    visit edit_item_path(item)
+    visit edit_admin_item_path(item)
 
     expect(page).to have_content("404")
     expect(page).to_not have_content(title)
