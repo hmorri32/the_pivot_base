@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :dashboard, only: [:index]
-    resources :items,     only: [:index, :edit, :new, :create, :update]
     resources :analytics, only: [:index]
 
     get '/stores/pending',   to: 'stores#index'
@@ -20,6 +19,9 @@ Rails.application.routes.draw do
     get '/stores/active',    to: 'stores#index'
 
     resources :stores, only: [:index, :show, :update]
+    resources :store, param: :slug, as: 'store' do
+      resources :items, only: [:index, :edit, :new, :create, :update]
+    end
   end
 
   namespace :users do
@@ -42,8 +44,8 @@ Rails.application.routes.draw do
 
   resources :stores, only: [:index, :new, :create]
   get '/categories/:category', to: 'categories#show', param: :slug, as: "category"
-  get '/:store', to: 'stores#show', param: :slug, as: 'store'
-  get '/:store/items', to: 'items#index', param: :slug, as: 'store/items'
+  get '/:store', to: 'items#index', param: :slug, as: 'store'
+
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
