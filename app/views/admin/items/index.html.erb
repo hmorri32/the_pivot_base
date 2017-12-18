@@ -3,7 +3,7 @@
 <div class="container">
   <%= link_to "Create New Item", new_admin_store_item_path(@store), class: "badge badge-success center" %>
   <div class="row">
-    <% @items.each do |item| %>
+    <% @store_items.items.each do |item| %>
       <div class="center-block">
         <div class="card border-white" style="width: 7rem;">
           <%= image_tag item.image.url(:medium), class: "card-img-top" %>
