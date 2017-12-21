@@ -18,8 +18,8 @@ class Order < ApplicationRecord
     item_hash.each do |item, quantity|
       self.items << item
       save!(validate: false)
-      order_item = OrderItem.find_or_create_by(order: self, item: item)
-      order_item.update(quantity: quantity, price: item.price)
+      order_item = order_items.find_or_create_by(item: item)
+      order_item.update!(quantity: quantity, price: item.price)
     end
   end
 
