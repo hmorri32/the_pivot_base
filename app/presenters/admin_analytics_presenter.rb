@@ -27,4 +27,11 @@ class AdminAnalyticsPresenter
   def items_ordered_per_customer
     User.user_quantity_of_items_ordered
   end
+
+  def most_popular_items(limit=nil)
+    Item.left_joins(:orders)
+    .merge(Order.active)
+    .order('(order_items.quantity * items.price) DESC')
+    .limit(limit)
+  end
 end

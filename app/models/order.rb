@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   has_many   :items, through: :order_items
   has_one    :charge
 
+  scope :active, -> { where.not(status: "cancelled") }
+
   enum status: ["ordered", "paid", "cancelled", "completed"]
 
   def total_price
